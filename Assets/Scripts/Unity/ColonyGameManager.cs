@@ -1,9 +1,17 @@
 using UnityEngine;
+using TMPro;
 
 public class ColonyGameManager : MonoBehaviour
 {
     [SerializeField] private TextAsset populationJson;
     [SerializeField] private TextAsset consumptionJson;
+
+    [SerializeField] private TMP_Text gameDayText;
+    [SerializeField] private TMP_Text foodText;
+    [SerializeField] private TMP_Text foodDaysText;
+    [SerializeField] private TMP_Text waterText;
+    [SerializeField] private TMP_Text waterDaysText;
+    [SerializeField] private TMP_Text starvationText;
 
     private ColonySimulation simulation;
 
@@ -23,9 +31,7 @@ public class ColonyGameManager : MonoBehaviour
         simulation =
             new ColonySimulation(population, consumption);
 
-        Debug.Log("Colony simulation started.");
-        Debug.Log("Food: " + simulation.Food);
-        Debug.Log("Water: " + simulation.Water);
+        UpdateUI();
     }
 
     private void Update()
@@ -38,16 +44,36 @@ public class ColonyGameManager : MonoBehaviour
 
             simulation.AdvanceDay();
 
-            Debug.Log(
-                "Game Day: " + simulation.GameDay +
-                " | Food: " + simulation.Food +
-                " | Water: " + simulation.Water
-            );
+            UpdateUI();
+        }
+    }
 
-            if (simulation.IsStarving())
-            {
-                Debug.LogWarning("COLONY STARVING");
-            }
+    private void UpdateUI()
+    {
+        gameDayText.text =
+            "GAME DAY: " + simulation.GameDay;
+
+        foodText.text =
+            "FOOD: " + simulation.Food.ToString("0");
+
+        foodDaysText.text =
+            "FOOD DAYS: " +
+            simulation.GetFoodDaysRemaining().ToString("0.0");
+
+        waterText.text =
+            "WATER: " + simulation.Water.ToString("0");
+
+        waterDaysText.text =
+            "WATER DAYS: " +
+            simulation.GetWaterDaysRemaining().ToString("0.0");
+
+        if (simulation.IsStarving())
+        {
+            starvationText.text = "COLONY STARVING";
+        }
+        else
+        {
+            starvationText.text = "COLONY OK";
         }
     }
 }
