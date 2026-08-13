@@ -1,144 +1,74 @@
-# \# Colony Survival Prototype
+# Colony Survival Prototype
 
-# 
+A small colony survival simulation prototype built in Unity.
 
-# A small colony survival simulation prototype built in Unity.
+The prototype demonstrates data-driven configuration using JSON, a pure C# simulation layer, Unity UI integration, automatic game-day progression, and EditMode unit testing.
 
-# 
+## Unity Version
 
-# The prototype demonstrates data-driven configuration using JSON, a pure C# simulation layer, Unity UI integration, and automatic game-day progression.
+Unity 2022.3.62f1
 
-# 
+## How to Run
 
-# \## Unity Version
+1. Open the project in Unity.
+2. Open the `ColonySurvival` scene.
+3. Press Play.
+4. The simulation automatically advances by one game day every real-time second.
 
-# 
+## Simulation
 
-# Unity 2022.3.62f1
+The colony tracks:
 
-# 
+- Villager count
+- Food
+- Water
+- Food consumption
+- Water consumption
+- Current game day
 
-# \## How to Run
+Each game day:
 
-# 
+- Food is consumed based on the number of villagers.
+- Water is consumed based on the number of villagers.
+- Resources cannot fall below zero.
+- The game day counter increases by one.
 
-# 1\. Open the project in Unity.
+The colony is considered starving when either food or water reaches zero.
 
-# 2\. Open the `ColonySurvival` scene.
+## Configuration
 
-# 3\. Press Play.
+Simulation starting values and consumption rates are stored in JSON configuration files.
 
-# 4\. The simulation automatically advances by one game day every real-time second.
+### Population Configuration
 
-# 
+`population.json` contains:
 
-# \## Simulation
+- Villager count
+- Starting food
+- Starting water
 
-# 
+### Consumption Configuration
 
-# The colony tracks:
+`consumption.json` contains:
 
-# 
+- Food consumed per villager per day
+- Water consumed per villager per day
 
-# \- Villager count
+These values are loaded at runtime and passed into the simulation.
 
-# \- Food
+No simulation values such as population, starting reserves, or consumption rates are hardcoded in the simulation logic.
 
-# \- Water
+## Architecture
 
-# \- Food consumption
+The project separates simulation logic from Unity-specific behaviour.
 
-# \- Water consumption
-
-# \- Current game day
-
-# 
-
-# Each game day:
-
-# 
-
-# \- Food is consumed based on the number of villagers.
-
-# \- Water is consumed based on the number of villagers.
-
-# \- Resources cannot fall below zero.
-
-# \- The game day counter increases by one.
-
-# 
-
-# The colony is considered starving when either food or water reaches zero.
-
-# 
-
-# \## Configuration
-
-# 
-
-# Simulation starting values and consumption rates are stored in JSON files.
-
-# 
-
-# \### Population Configuration
-
-# 
-
-# The population configuration contains:
-
-# 
-
-# \- Villager count
-
-# \- Starting food
-
-# \- Starting water
-
-# 
-
-# \### Consumption Configuration
-
-# 
-
-# The consumption configuration contains:
-
-# 
-
-# \- Food consumed per villager per day
-
-# \- Water consumed per villager per day
-
-# 
-
-# These values are loaded at runtime and passed into the simulation.
-
-# 
-
-# \## Architecture
-
-# 
-
-# The project separates simulation logic from Unity-specific behaviour.
-
-# 
-
-# ```text
-
-# JSON Configuration
-
-# &#x20;       ↓
-
-# Configuration Data Classes
-
-# &#x20;       ↓
-
-# ColonySimulation
-
-# &#x20;       ↓
-
-# ColonyGameManager
-
-# &#x20;       ↓
-
-# Unity UI
-
+```text
+JSON Configuration
+        ↓
+Configuration Data Classes
+        ↓
+ColonySimulation
+        ↓
+ColonyGameManager
+        ↓
+Unity UI
