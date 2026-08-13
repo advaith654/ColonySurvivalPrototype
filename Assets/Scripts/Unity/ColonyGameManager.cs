@@ -42,10 +42,19 @@ public class ColonyGameManager : MonoBehaviour
         {
             dayTimer -= SecondsPerGameDay;
 
-            simulation.AdvanceDay();
-
-            UpdateUI();
+            AdvanceDay();
         }
+    }
+
+    public void AdvanceDayManually()
+    {
+        AdvanceDay();
+    }
+
+    private void AdvanceDay()
+    {
+        simulation.AdvanceDay();
+        UpdateUI();
     }
 
     private void UpdateUI()
