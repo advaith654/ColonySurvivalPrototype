@@ -72,3 +72,63 @@ ColonySimulation
 ColonyGameManager
         ↓
 Unity UI
+## Screenshots
+
+### Gameplay
+
+![Colony Survival Gameplay](Documentation/gameplay.png)
+
+### Unit Tests
+
+![Unit Tests](Documentation/unit-tests.png)
+
+## Demo Video
+
+[Watch the Colony Survival Prototype Demo](https://drive.google.com/file/d/1lYtdWFytkJxLoJUyMQb7been-KhtrESp/view?usp=sharing)
+
+## Testing
+
+The core simulation logic is covered by EditMode unit tests.
+
+The following tests pass successfully:
+
+- `AdvanceDay_DeductsCorrectFoodAndWater`
+- `DaysRemaining_IsCalculatedCorrectly`
+- `Starving_WhenEitherReserveReachesZero`
+
+All 3 tests pass successfully.
+
+## Design Decisions
+
+- Simulation logic is separated from Unity-specific behaviour.
+- JSON is used for configuration so simulation values can be changed without modifying the core simulation code.
+- The simulation layer is implemented as a pure C# class, making it easier to test independently.
+- Unity is responsible for UI updates and game-time progression.
+- Resources are clamped to zero to prevent negative food or water values.
+- Game days advance automatically every real-time second for demonstration purposes.
+
+## Project Structure
+
+```text
+Assets/
+├── Config/
+│   ├── population.json
+│   └── consumption.json
+│
+├── Scenes/
+│   └── ColonySurvival.unity
+│
+├── Scripts/
+│   ├── Core/
+│   │   └── ColonySimulation.cs
+│   │
+│   ├── Data/
+│   │   ├── PopulationConfig.cs
+│   │   └── ConsumptionConfig.cs
+│   │
+│   └── Unity/
+│       └── ColonyGameManager.cs
+│
+└── Tests/
+    └── Editor/
+        └── ColonySimulationTests.cs
